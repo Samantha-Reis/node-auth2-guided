@@ -41,7 +41,7 @@ router.post("/login", async (req, res, next) => {
 // 		sessions[authToken] = user.id
 // 
 // 		// res.setHeader("Authorization", authToken)
-// 		res.setHeader("Set-Cookie", `token=${authToken}; Path=/`)
+// 		res.setHeader("Set-Cookie", `token=${authToken}; Path=/`; HttpOnly)
 
 		// express-session does the above for us
 		req.session.user = user
@@ -55,15 +55,12 @@ router.post("/login", async (req, res, next) => {
 })
 
 router.get("/logout", restrict(), (req, res, next) => {
-	// this will delete the session in the database and try to expire the cookie,
-	// though it's ultimately up to the client if they delete the cookie or not.
-	// but it becomes useless to them once the session is deleted server-side.
-	req.session.destroy((err) => {
-		if (err) {
+	req.session.destroy((err)=>{
+		if(err){
 			next(err)
-		} else {
+		}else{
 			res.json({
-				message: "Successfully logged out",
+				message:"Successfully logged out",
 			})
 		}
 	})

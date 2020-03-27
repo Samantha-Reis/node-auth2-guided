@@ -2,7 +2,6 @@ const express = require("express")
 const cors = require("cors")
 const helmet = require("helmet")
 const session = require("express-session")
-// this is just immediately calling the imported function with `session` as a parameter
 const KnexSessionStore = require("connect-session-knex")(session)
 const authRouter = require("./auth/auth-router")
 const usersRouter = require("./users/users-router")
@@ -24,8 +23,8 @@ server.use(session({
 	// 	maxAge: 15 * 1000, // expire the cookie after 15 seconds
 	},
 	store: new KnexSessionStore({
-		knex: dbConfig, // configured instance of knex
-		createtable: true, // if the session table doesn't exist, create it automatically
+		knex: dbConfig, //configured instance of knex
+		createTable: true, //if the session table doesn't exist, create it autmoatically
 	}),
 }))
 
